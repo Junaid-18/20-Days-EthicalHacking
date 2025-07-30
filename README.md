@@ -46,13 +46,10 @@ Welcome to **Day 1** of my **30-Day Ethical Hacking Challenge**! This journey do
 
 ---
 
-## 📸 Screenshots
-Screenshots of installation steps can be found in the `screenshots/` folder.
 
----
 
 ## 📄 Notes PDF
-See [`Day1_Notes.pdf`](./Day1_Notes.pdf) for:
+See [`Day1_Notes.pdf`](./Day1.docx) for:
 - Definitions: White Hat, Black Hat, Pen Testing
 - Installation summary
 - System requirements
