@@ -109,3 +109,35 @@ Reconnaissance is the first step in both the Cyber Kill Chain and Ethical Hackin
 | **Gaining Access**  | Exploiting vulnerabilities to gain unauthorized access.           | SQL injection, Buffer overflow, Phishing                              |
 | **Maintaining Access** | Keeping control over the compromised system.                 | Installing rootkits, Hidden users, Tunneling                           |
 | **Clearing Tracks** | Erasing traces of the attack to avoid detection.                  | Modifying logs, Deleting evidence of unauthorized access               |
+
+
+
+# 🔐 Day 3 - Ethical Hacking: Google Dorking & DNS Reconnaissance
+
+## 📍 Google Dorking
+
+Google Dorking involves using advanced search operators to extract sensitive or hidden information from websites.
+
+### 🔎 Common Google Dorks:
+
+| Operator       | Description                                       | Example Usage                        |
+|----------------|---------------------------------------------------|--------------------------------------|
+| `site:`        | Restricts results to a specific domain            | `site:example.com`                   |
+| `filetype:`    | Searches for specific file types                  | `filetype:pdf site:example.com`      |
+| `inurl:`       | Finds URLs containing a specific string           | `inurl:login`                        |
+| `intitle:`     | Searches for pages with specific title words      | `intitle:"Google Dorking"`          |
+| `allintitle:`  | All specified words in title                      | `allintitle:Google Dorking Tools`   |
+| `intext:`      | Search specific text in the body of a webpage     | `intext:"open source intelligence"`  |
+
+---
+
+## 📍 DNS Reconnaissance
+
+DNS Recon is used to gather information about domain infrastructure.
+
+### 🔧 Tools & Commands Used:
+
+#### WHOIS Lookup:
+```bash
+whois org.com
+
