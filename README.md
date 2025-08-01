@@ -141,3 +141,84 @@ DNS Recon is used to gather information about domain infrastructure.
 ```bash
 whois org.com
 
+
+# 🧠 Day 4 - Ethical Hacking 
+
+📅 **Date:** 1st August 2025
+
+## 📌 Topics Covered
+1. Social Media Reconnaissance
+2. Username Enumeration using Sherlock
+3. Web Technology Fingerprinting
+   - Wappalyzer (Extension)
+   - BuiltWith (Online Tool)
+   - WhatWeb (Command Line Tool)
+
+---
+
+## 🔍 1. Social Media Reconnaissance
+Using LinkedIn and Google Dorks to identify fresh employees or interns in a target organization.
+
+**Google Dork Example:**
+```
+site:linkedin.com/in/ "org.com"
+```
+
+---
+
+## 🕵️‍♂️ 2. Sherlock – Username Enumerator
+
+### 🔹 Quick Install (Kali Linux)
+```bash
+sherlock
+# If not found:
+sudo apt install sherlock
+```
+
+### 🔸 Manual Install
+```bash
+git clone https://github.com/sherlock-project/sherlock.git
+cd sherlock
+pip3 install -r requirements.txt
+```
+
+### ▶️ Usage
+```bash
+sherlock employee_name
+```
+
+---
+
+## 🌐 3. Web Technology Fingerprinting
+
+### ✅ Wappalyzer
+- Browser Extension
+- View CMS, JS libs, and servers used by target site
+
+### ✅ BuiltWith
+- Visit https://builtwith.com
+- Enter org.com to get full stack report
+
+### ✅ WhatWeb (CLI Tool)
+```bash
+sudo apt install whatweb
+whatweb org.com
+```
+
+---
+
+## ✅ Summary Table
+
+| Tool        | Purpose                           | Platform     | Command / URL                    |
+|-------------|-----------------------------------|--------------|----------------------------------|
+| Sherlock    | Username enumeration              | CLI (Kali)   | sherlock employee_name           |
+| Wappalyzer  | Tech stack detection              | Extension    | Browser > Wappalyzer             |
+| BuiltWith   | Web tech profiling                | Online tool  | https://builtwith.com            |
+| WhatWeb     | Web server + CMS detection        | CLI (Kali)   | whatweb org.com                  |
+
+---
+
+## 📝 Final Notes
+- Use OSINT responsibly.
+- Combine personal data with web tech info for ethical recon and testing.
+
