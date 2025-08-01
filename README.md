@@ -135,25 +135,18 @@ Google Dorking involves using advanced search operators to extract sensitive or 
 
 DNS Recon is used to gather information about domain infrastructure.
 
-### 🔧 Tools & Commands Used:
-
-#### WHOIS Lookup:
-```bash
-whois org.com
 
 
-#** **🧠 Day 4 – Ethical Hacking Journey**
 
-📅 **Date:** 1st August 2025
+# 🧠 Day 4 – Social Media Recon and web Finger Printing
 
 ## 📌 Topics Covered
-1. Social Media Reconnaissance  
-2. Username Enumeration using Sherlock  
-3. Web Technology Fingerprinting  
-   - Wappalyzer (Extension)  
-   - BuiltWith (Online Tool)  
-   - WhatWeb (Command Line Tool)**
-
+1. Social Media Reconnaissance
+2. Username Enumeration using Sherlock
+3. Web Technology Fingerprinting
+   - Wappalyzer (Extension)
+   - BuiltWith (Online Tool)
+   - WhatWeb (Command Line Tool)
 
 ---
 
@@ -222,4 +215,3 @@ whatweb org.com
 ## 📝 Final Notes
 - Use OSINT responsibly.
 - Combine personal data with web tech info for ethical recon and testing.
-
