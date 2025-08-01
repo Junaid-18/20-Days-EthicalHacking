@@ -142,17 +142,18 @@ DNS Recon is used to gather information about domain infrastructure.
 whois org.com
 
 
-# 🧠 Day 4 - Ethical Hacking 
+#** **🧠 Day 4 – Ethical Hacking Journey**
 
 📅 **Date:** 1st August 2025
 
 ## 📌 Topics Covered
-1. Social Media Reconnaissance
-2. Username Enumeration using Sherlock
-3. Web Technology Fingerprinting
-   - Wappalyzer (Extension)
-   - BuiltWith (Online Tool)
-   - WhatWeb (Command Line Tool)
+1. Social Media Reconnaissance  
+2. Username Enumeration using Sherlock  
+3. Web Technology Fingerprinting  
+   - Wappalyzer (Extension)  
+   - BuiltWith (Online Tool)  
+   - WhatWeb (Command Line Tool)**
+
 
 ---
 
