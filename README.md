@@ -215,3 +215,58 @@ whatweb org.com
 ## 📝 Final Notes
 - Use OSINT responsibly.
 - Combine personal data with web tech info for ethical recon and testing.
+
+
+# 🛡️ Day 5 – Subdomain Enumeration and Firewalls Identifiers
+
+## 📚 Topics Covered
+
+### 🔹 Subdomain Enumeration
+
+- **What is a Subdomain?**  
+  A subdomain is a division of a main domain, used to organize or host specific services like `mail.example.com` or `blog.example.com`.
+
+- **Definition of Subdomain Enumeration**  
+  Subdomain enumeration is the process of identifying valid subdomains associated with a target domain. It is a crucial part of reconnaissance in ethical hacking as it uncovers potential entry points that are not visible on the main site.
+
+- **Tools Used:**
+  - **Subfinder**  
+    Command:  
+    ```bash
+    subfinder -d org.com
+    ```
+  - **Online Tool**  
+    Visit: [https://subdomainfinder.c99.nl](https://subdomainfinder.c99.nl)
+
+---
+
+### 🔹 Identifying Firewalls
+
+- **What is a Firewall?**  
+  A firewall is a network security system that monitors and filters traffic to and from a network. It helps protect against unauthorized access.
+
+- **Tool Used:**
+  - **wafw00f**  
+    Command:  
+    ```bash
+    wafw00f https://org.com
+    ```
+    If it doesn't work, try:
+    ```bash
+    sudo wafw00f https://org.com
+    ```
+  🔎 Note: This tool may successfully detect firewalls for some domains but might fail for others depending on the WAF configuration.
+
+---
+
+## 📝 Observations
+
+- Subdomain enumeration tools like Subfinder and online lookup services are effective in identifying exposed infrastructure.
+- Firewall detection is sometimes limited by server-side settings and protection mechanisms.
+- These tools are essential in the **Reconnaissance** phase of ethical hacking.
+
+---
+
+📄 **[Download the Day 5 Detailed Report](./Day5.docx)**  
+📁 Folder: `Day5/`  
+
