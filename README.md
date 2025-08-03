@@ -270,3 +270,52 @@ whatweb org.com
 📄 **[Download the Day 5 Detailed Report](./Day5.docx)**  
 📁 Folder: `Day5/`  
 
+
+# 🧠 Day 6 – Active Reconnaissance & Nmap Scanning
+
+## 🔍 Topic: Active Reconnaissance
+Active reconnaissance involves directly interacting with a target system to gather information. Unlike passive reconnaissance, it's **detectable** and **may trigger alerts** on IDS/IPS systems.
+
+**Examples include:**
+- Port Scanning
+- OS Detection
+- Service Enumeration
+- Vulnerability Scanning
+
+**Tools used:** Nmap, Netcat, Hping
+
+---
+
+## 📌 What are Ports?
+Ports are virtual communication endpoints used to identify specific processes or network services.
+
+| Port | Service         | Use                        |
+|------|------------------|-----------------------------|
+| 20   | FTP Data         | File transfer               |
+| 21   | FTP Command      | FTP control                 |
+| 22   | SSH              | Secure shell (remote login) |
+| 25   | SMTP             | Email service               |
+| 53   | DNS              | Domain name resolution      |
+| 80   | HTTP             | Web (non-secure)            |
+| 443  | HTTPS            | Web (secure)                |
+
+---
+
+## 🔗 What are Protocols?
+- **TCP** – Connection-oriented, reliable
+- **UDP** – Connectionless, faster but unreliable
+
+---
+
+## 🛠️ Nmap Tool Overview
+
+Nmap (Network Mapper) is used for:
+- Host discovery
+- Port scanning
+- OS & version detection
+- Running vulnerability scripts
+
+### ✅ Command we used:
+```bash
+sudo nmap -sS -sV -sC -O scanme.nmap.org
+sudo nmap -A org.com
