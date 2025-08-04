@@ -319,3 +319,106 @@ Nmap (Network Mapper) is used for:
 ```bash
 sudo nmap -sS -sV -sC -O scanme.nmap.org
 sudo nmap -A org.com
+```
+
+
+# 🛡️ Day 7 – Directory Bruteforcing 
+
+---
+
+## 🔍 What is a Directory?
+
+In web applications, a **directory** is like a folder that stores web pages, configuration files, scripts, and other components. Some directories are hidden or not linked publicly, making them vulnerable if they contain sensitive data such as:
+- Admin panels
+- Backups
+- Configuration files
+
+Directory Bruteforcing helps uncover these hidden folders by trying many possible paths using a **wordlist**.
+
+---
+
+## 🛠️ Practical Steps
+
+### ✅ Step 1: Start the Machine
+We used the **"Vulnversity"** machine on [TryHackMe](https://tryhackme.com), copied the **target IP address**, e.g.:
+
+```bash
+http://10.10.188.89
+🚀 Tool 1: Gobuster (for HTTP)
+🔹 Command:
+bash
+Copy
+Edit
+gobuster dir -u http://10.10.188.89 -w /usr/share/seclists/Discovery/Web-Content/common.txt
+🔹 Explanation:
+Flag	Description
+dir	Directory brute-force mode
+-u	Target URL
+-w	Path to the wordlist file
+
+⚠️ If the wordlist path doesn't work, check:
+
+bash
+Copy
+Edit
+ls /usr/share/seclists/Discovery/Web-Content/
+Or install Seclists:
+
+bash
+Copy
+Edit
+sudo apt install seclists
+📄 Sample Output:
+bash
+Copy
+Edit
+/.htaccess (Status: 403)
+/.hta       (Status: 403)
+/admin      (Status: 301)
+/uploads    (Status: 301)
+403: Forbidden – file/folder exists but access is denied.
+
+301: Moved Permanently – folder exists and can be accessed.
+
+🔐 Gobuster HTTPS Limitation
+Gobuster may fail with HTTPS URLs due to certificate or SSL issues. That’s why we switch to Feroxbuster for HTTPS scanning.
+
+🚀 Tool 2: Feroxbuster (for HTTPS)
+🔹 Command:
+bash
+Copy
+Edit
+feroxbuster --url https://10.10.188.89 -w /usr/share/seclists/Discovery/Web-Content/common.txt
+✅ Why Feroxbuster?
+Works well with HTTPS
+
+Supports recursion
+
+Automatically handles redirects
+
+Easy and fast
+
+🔧 Install it:
+bash
+Copy
+Edit
+sudo apt install feroxbuster
+📂 Wordlist Location in Kali Linux
+To find common wordlists:
+
+bash
+Copy
+Edit
+ls /usr/share/seclists/Discovery/Web-Content/
+Or search directly:
+
+bash
+Copy
+Edit
+sudo find / -name "common.txt" 2>/dev/null
+
+🧠 Summary
+Tool	Protocol	Usage Purpose	Wordlist Path
+Gobuster	HTTP	Fast directory bruteforcing	/usr/share/seclists/Discovery/Web-Content/common.txt
+Feroxbuster	HTTPS	Secure brute-forcing	/usr/share/seclists/Discovery/Web-Content/common.txt
+
