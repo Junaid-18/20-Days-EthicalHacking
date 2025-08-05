@@ -421,4 +421,85 @@ sudo find / -name "common.txt" 2>/dev/null
 Tool	Protocol	Usage Purpose	Wordlist Path
 Gobuster	HTTP	Fast directory bruteforcing	/usr/share/seclists/Discovery/Web-Content/common.txt
 Feroxbuster	HTTPS	Secure brute-forcing	/usr/share/seclists/Discovery/Web-Content/common.txt
+```
+
+# 🛡️ Day 8 – Vulnerability Scanning with Nessus Essentials
+
+## 🔍 What is Vulnerability Scanning?
+
+Vulnerability scanning is an automated method to identify weaknesses in systems, networks, and applications. These weaknesses may include outdated software, unpatched vulnerabilities, or misconfigurations.
+
+It is a core part of cybersecurity hygiene, allowing organizations to detect risks before they can be exploited.
+
+---
+
+## 🧾 Types of Vulnerability Scans
+
+| **Scan Type**             | **Description**                                                                                   | **Access Level**            | **Purpose**                                                                 |
+|---------------------------|---------------------------------------------------------------------------------------------------|-----------------------------|------------------------------------------------------------------------------|
+| **External Scans**        | Scans externally-facing IPs to find perimeter/cloud vulnerabilities.                              | Public-facing               | Assess external security posture.                                           |
+| **Internal Scans**        | Run inside the network to detect internal risks.                                                  | Internal network access     | Identify post-breach risks.                                                 |
+| **Unauthenticated Scans** | No login required; uses public info to detect vulnerabilities.                                    | No credentials required     | Reveal visible weaknesses to outsiders.                                     |
+| **Authenticated Scans**   | Uses valid login credentials to deeply assess the system.                                         | Valid user credentials      | Reveal hidden vulnerabilities and compliance issues.                        |
+
+---
+
+## 🛠 Tool Used: Nessus Essentials
+
+[Nessus Essentials](https://www.tenable.com/products/nessus/nessus-essentials) is a free, professional vulnerability scanner by Tenable. It supports scanning up to 16 IP addresses and provides detailed vulnerability insights.
+
+---
+
+## ⚙️ Installation Steps (on Kali Linux)
+
+1. **Download Nessus Essentials**  
+   - Get the `.deb` file from the Tenable website.
+
+2. **Navigate to Downloads Directory**  
+   bash
+   cd Downloads  
+   ls
+Install Nessus
+
+
+sudo dpkg -i Nessus-10.x.x-debian6_amd64.deb
+Start Nessus Service
+
+
+sudo systemctl start nessusd.service
+Open in Browser
+
+
+Visit: https://localhost:8834
+
+Click Advanced → Continue to localhost
+
+Register & Setup
+
+Choose Nessus Essentials, register, and receive activation code
+
+Create user credentials and let plugins download
+ ```
+## 🧪 Practical Task Performed
+Launched Nessus dashboard
+
+Created a Basic Network Scan
+
+Entered a target IP and ran the scan
+
+Observed categorized vulnerabilities:
+
+Critical, High, Medium, etc.
+
+Each with CVEs, severity levels, and remediation tips
+
+
+✅ Outcome
+Understood different types of vulnerability scans
+
+Installed Nessus and set up scanning environment
+
+Executed a real scan and reviewed vulnerability reports
+
+Gained hands-on experience in security auditing
 
