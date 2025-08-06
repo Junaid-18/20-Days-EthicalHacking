@@ -492,7 +492,7 @@ Observed categorized vulnerabilities:
 Critical, High, Medium, etc.
 
 Each with CVEs, severity levels, and remediation tips
-
+ ```
 
 ✅ Outcome
 Understood different types of vulnerability scans
@@ -503,3 +503,161 @@ Executed a real scan and reviewed vulnerability reports
 
 Gained hands-on experience in security auditing
 
+
+
+# 🛡️ Day 9 –  Finding Exploits
+
+---
+
+## 📌 Overview
+
+After performing **port scanning** and **service detection** using tools like `nmap`, the next step in penetration testing is **identifying known vulnerabilities or exploits** for the services and software versions running on a target system. This process is often called **exploit enumeration**.
+
+The goal is to map the discovered service/version to a known CVE (Common Vulnerabilities and Exposures) and find a corresponding **public exploit** to further investigate or weaponize.
+
+---
+
+## 🔧 Tools Used
+
+| Tool         | Purpose                                                                 |
+|--------------|-------------------------------------------------------------------------|
+| `nmap`       | Port scanning and service version detection                             |
+| Exploit-DB   | Public exploit database (offline & online)                              |
+| Rapid7       | Online vulnerability research and exploit frameworks (e.g., Metasploit) |
+| GitHub       | Open-source exploits and POCs                                            |
+| `searchsploit` | Offline tool to search for public exploits locally                     |
+| `mousepad`   | To view exploit code files                                               |
+
+---
+
+## 🔍 Step-by-Step Process
+
+### ✅ 1. Scan the Target with Nmap
+
+```bash
+nmap -sS -sV <target-ip>
+```
+
+- `-sS`: SYN scan (stealthy TCP scan)
+- `-sV`: Service version detection
+
+**Example Output Snippet:**
+
+```
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))
+```
+
+---
+
+### ✅ 2. Search for Exploits Manually (Online)
+
+#### 🔹 A. Exploit-DB
+
+- Website: [https://www.exploit-db.com](https://www.exploit-db.com)
+- Purpose: Official and community-contributed public exploits and CVEs.
+- Search for:
+  ```
+  Apache 2.4.18 exploit
+  ```
+
+#### 🔹 B. Rapid7 / Metasploit Framework
+
+- Website: [https://www.rapid7.com/db/](https://www.rapid7.com/db/)
+- Try keywords like:
+  ```
+  Apache 2.4.18
+  OpenSSH 7.2p2
+  ```
+
+#### 🔹 C. GitHub
+
+- Use:
+  ```
+  site:github.com "Apache 2.4.18 exploit"
+  ```
+
+---
+
+### ✅ 3. Use Searchsploit (Offline)
+
+```bash
+searchsploit Apache 2.4.18
+```
+
+**Example Output:**
+```
+Apache HTTP Server 2.4.18 - mod_http2 DoS | linux/dos/40002.txt
+Apache 2.4.18 - Remote Code Execution     | linux/remote/12345.py
+```
+
+---
+
+### ✅ 4. Download Exploit for Offline Use
+
+```bash
+searchsploit -m linux/remote/12345.py
+```
+
+---
+
+### ✅ 5. Read or Edit the Exploit Code
+
+```bash
+mousepad 12345.py
+```
+
+Use `nano`, `vim`, or `gedit` as alternatives.
+
+---
+
+## 📁 Important Concepts
+
+| Concept              | Explanation                                                  |
+|----------------------|--------------------------------------------------------------|
+| CVE                  | Public identifier for known vulnerabilities                  |
+| PoC                  | Proof-of-Concept code that demonstrates exploitability       |
+| RCE / LFI / XSS / DoS| Types of attacks: Remote Code Exec, File Inclusion, etc.     |
+| Privilege Escalation | Gaining higher system access                                 |
+| Public Exploit       | Exploit code available to the public                         |
+
+---
+
+## 📌 Best Practices
+
+- ✅ Always verify that the exploit version matches the target.
+- ✅ Analyze PoC code before running it.
+- ✅ Prefer trusted sources: Exploit-DB, Rapid7, GitHub.
+- ✅ Use sandbox/VM environment for testing.
+
+---
+
+## 🧪 Example: Full Flow
+
+```bash
+nmap -sS -sV 10.10.98.129
+searchsploit Apache 2.4.18
+searchsploit -m linux/remote/12345.py
+mousepad 12345.py
+```
+
+---
+
+## ✅ Summary Table
+
+| Step              | Tool / Action              | Example Command                            |
+|-------------------|----------------------------|---------------------------------------------|
+| Scan Target       | `nmap`                     | `nmap -sS -sV 10.10.98.129`                |
+| Search Online     | Exploit-DB / GitHub / R7   | Search `"Apache 2.4.18 exploit"`           |
+| Search Offline    | `searchsploit`             | `searchsploit Apache 2.4.18`               |
+| Copy Exploit File | `searchsploit -m <path>`   | `searchsploit -m linux/remote/12345.py`   |
+| View Code         | `mousepad`, `nano`, etc.   | `mousepad 12345.py`                        |
+
+---
+
+## 🧠 Conclusion
+
+After fingerprinting services using Nmap, tools like Searchsploit, Exploit-DB, Rapid7, and GitHub help in mapping services to known vulnerabilities. This helps security professionals and bug bounty hunters to assess risks, exploit responsibly in labs, and patch or report vulnerabilities effectively.
+
+---
