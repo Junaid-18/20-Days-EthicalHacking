@@ -661,3 +661,61 @@ mousepad 12345.py
 After fingerprinting services using Nmap, tools like Searchsploit, Exploit-DB, Rapid7, and GitHub help in mapping services to known vulnerabilities. This helps security professionals and bug bounty hunters to assess risks, exploit responsibly in labs, and patch or report vulnerabilities effectively.
 
 ---
+
+
+# Day 10 - Reverse Shell vs Bind Shell
+
+### Explanation
+- **Bind Shell**: The target machine opens a port and waits for the attacker to connect. This method requires the attacker to know the victim's IP address and is more likely to be blocked by firewalls.
+- **Reverse Shell**: The target machine initiates a connection to the attacker's machine. This method is often used to bypass firewalls and doesn't require the attacker to know the victim's IP address.
+
+### Comparison Table
+
+| Feature | Bind Shell | Reverse Shell |
+| --- | --- | --- |
+| **Connection Initiation** | Attacker connects to a listening port on the target | Target machine initiates connection back to attacker |
+| **Listener Location** | Listener runs on target machine | Listener runs on attacker's machine |
+| **Common Use Cases** | Persistence & direct control | Initial access & bypassing firewalls |
+| **Firewall Bypass** | More likely blocked by firewalls | Can bypass as target connects outward |
+| **IP Requirement** | Attacker must know victim's IP | No need to know victim's IP |
+| **Security Implications** | Exposes a port on target, making it vulnerable | Less exposure since connection is initiated by target |
+| **Typical Protocols** | Often uses TCP/UDP directly | Often uses HTTP/S or common protocols to avoid detection |
+
+---
+
+## Topic 2: Payloads
+
+### What is a Payload?
+A **payload** is the part of malware or an exploit that performs the intended malicious action on the target system once a vulnerability is exploited. In penetration testing, payloads are often used to gain control, exfiltrate data, or open shells.
+
+### Staged vs Non-Staged Payloads
+
+#### **Staged Payload**:
+- Delivered in parts: an initial "stager" sets up a connection and downloads the final payload.
+- Smaller initial size, requires network connectivity for final payload.
+- More complex but flexible.
+
+#### **Non-Staged (Stageless) Payload**:
+- Self-contained single executable with all functionalities.
+- Larger size but operates independently without additional downloads.
+- Simpler but less flexible.
+
+### Comparison Table
+
+| Feature | Staged Payload | Non-Staged (Stageless) Payload |
+| --- | --- | --- |
+| **Definition** | Multiple parts: stager + final payload | Self-contained, all-in-one |
+| **Execution Process** | Requires stager to download payload | Executes in single step |
+| **File Size** | Smaller initially | Larger since everything is included |
+| **Complexity** | More complex due to multiple components | Simpler, single executable |
+| **Network Dependency** | Needs connectivity to fetch payload | No additional network needed |
+| **Stealth/Detection** | More detectable (multiple interactions) | Stealthier (less interaction) |
+
+---
+
+## Summary
+- **Bind Shell** is more for persistence but easier to block.
+- **Reverse Shell** is better for bypassing firewalls and stealth.
+- **Staged Payloads** are modular and smaller initially but require network.
+- **Non-Staged Payloads** are bigger but more self-sufficient.
+---
