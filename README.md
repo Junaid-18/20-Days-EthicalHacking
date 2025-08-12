@@ -907,3 +907,71 @@ python3 -m http.server 80
 
 ---
 **Disclaimer:** This content is for educational purposes only.
+
+
+# Day 14: Brute Force Attacks
+
+## 📌 Overview
+A brute-force attack is a technique used to discover valid credentials by systematically attempting many possible combinations. It can be performed **online** (directly against a live target) or **offline** (on stolen password hashes).
+
+---
+
+## 🔍 Online vs Offline Brute Force
+
+| Aspect       | Online Brute Force                                                                 | Offline Brute Force |
+|--------------|------------------------------------------------------------------------------------|---------------------|
+| **Definition** | Attempts are sent directly to the live target (e.g., SSH, HTTP login).            | Performed on stolen/obtained password hashes locally. |
+| **Speed**    | Slower due to network latency and rate limits.                                     | Faster with GPU acceleration. |
+| **Stealth**  | Easier to detect (network logs, IDS alerts).                                       | Harder to detect; no live system interaction. |
+| **Requirements** | Target service must be accessible.                                             | Requires database/hash dump first. |
+| **Examples** | Testing SSH with many passwords.                                                   | Cracking bcrypt hashes with Hashcat. |
+
+---
+
+## 🛠 Types of Brute Force Attacks
+
+| Attack Type         | Description |
+|--------------------|-------------|
+| **Simple Brute Force** | Tries all possible character combinations until the correct password is found. |
+| **Dictionary Attack** | Uses a predefined list of common/leaked passwords. |
+| **Hybrid Attack** | Mixes dictionary with variations (adding numbers, symbols, etc.). |
+| **Credential Stuffing** | Reuses leaked username-password pairs from previous breaches. |
+| **Password Spraying** | Tries a few common passwords across many accounts. |
+| **Rainbow Table Attack** | Uses precomputed hash lookup tables; ineffective with salted hashes. |
+
+---
+
+## 🛡 Role of CAPTCHA
+- Slows down or prevents automated login attempts.
+- Not foolproof; attackers may bypass using ML or human-solving services.
+
+---
+
+## 🔧 Tools
+- **Hydra** → Fast brute-force tool for multiple services (SSH, HTTP, FTP, etc.).
+- **Burp Suite + FoxyProxy** → Captures and analyzes HTTP requests to craft attack payloads.
+
+---
+
+## 🧪 Safe Lab Workflow (Authorized Testing Only)
+1. Confirm authorization.
+2. Scan with **Nmap** to find open ports.
+3. Capture login requests using **Burp Suite**.
+4. Select appropriate attack method.
+5. Run with low intensity.
+6. Verify credentials manually.
+7. Document results.
+
+---
+
+## 🛡 Defensive Measures
+- Enforce **Multi-Factor Authentication (MFA)**.
+- Use **strong password policies**.
+- **Rate limiting** and **progressive delays**.
+- **Account lockouts** after multiple failures.
+- Implement **CAPTCHAs**.
+- **Monitor authentication patterns**.
+- Use **strong password hashing** with salts.
+
+---
+⚠ **Ethics Reminder:** Always have explicit permission before testing. Only practice in authorized labs like **TryHackMe** or **Hack The Box**.
