@@ -975,3 +975,34 @@ A brute-force attack is a technique used to discover valid credentials by system
 
 ---
 ⚠ **Ethics Reminder:** Always have explicit permission before testing. Only practice in authorized labs like **TryHackMe** or **Hack The Box**.
+
+
+# Day 15 – Practice Day (Review & Hands-On)
+
+## Overview
+This day consolidates the knowledge from Days 1–14 of the 30-Day Ethical Hacking Challenge into hands-on lab activities.
+
+## Structure
+- Warm-up: Verify lab scope, networking, and run initial scans.
+- Scenario 1: Server-side exploitation.
+- Scenario 2: Web app enumeration + offline password cracking.
+- Scenario 3: Client-side delivery mechanics (optional).
+- Reporting: Document all findings and recommendations.
+
+## Ethics
+Only perform these activities in a safe, isolated lab environment with systems you control.
+
+## Key Commands
+```bash
+# Recon
+nmap -p- --min-rate 2000 <IP>
+nmap -sV -sC -p <ports> <IP>
+
+# Web Enumeration
+whatweb http://<IP>
+gobuster dir -u http://<IP> -w /usr/share/wordlists/dirb/common.txt
+
+# Password Cracking
+john --wordlist=rockyou.txt hashes.txt
+hashcat -m <mode> hashes.txt rockyou.txt
+```
