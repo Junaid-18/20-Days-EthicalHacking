@@ -1413,4 +1413,37 @@ exploit
 7. After restart, regain session automatically.
 
 ---
+# Day 19 — Password Cracking (Ethical Auditing & Defense)
+
+> **Legal & Ethical Notice**
+> For authorized security assessments *only*. Do not perform any activity without written permission and a defined scope.
+
+## Overview
+- **Password**: secret used for authentication.  
+- **Hash**: one‑way digest of input; used for integrity and password storage.  
+- **Cracking (auditing)**: evaluating password strength by attempting to guess inputs that produce matching hashes.
+
+## Hashing vs Encryption (Quick Contrast)
+- **Hashing**: one‑way, fixed‑length output; used for integrity and password storage with salts/KDFs.  
+- **Encryption**: two‑way with keys; used to keep data confidential (decryptable with the right key).
+
+## Tools (High‑Level)
+- **Hashcat (GPU)**: Fast auditing on supported GPUs.  
+  - Pattern: `hashcat -a <ATTACK_MODE> -m <HASH_MODE> <HASH_FILE> <WORDLIST>`  
+- **John the Ripper (CPU)**: Broad format support; integrates *2john utilities.  
+  - Pattern: `john <HASH_FILE> --format=<FORMAT_NAME> --wordlist=<WORDLIST>`
+
+### Format-Specific Extractors
+- `zip2john <ZIP_FILE> > <HASH_FILE>`  
+- `ssh2john <SSH_PRIVATE_KEY> > <HASH_FILE>`  
+- `keepass2john <KDBX_FILE> > <HASH_FILE>`  
+
+> **Never upload** sensitive hashes/databases to third‑party sites. Use a secure lab and approved wordlists only.
+
+## Defensive Playbook
+- Argon2/bcrypt/scrypt for storage; long unique passphrases; MFA; rate‑limit & lockouts; salts + optional pepper; disable legacy auth; continuous monitoring & education.
+
+---
+**Deliverables**  
+- Full guide: *Day19_Password_Cracking_Guide.docx*  
 
