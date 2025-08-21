@@ -1,6 +1,6 @@
 # 🔐 30 Days of Ethical Hacking 
 
-Welcome to **Day 1** of my **30-Day Ethical Hacking Challenge**! This journey documents my daily learning and hands-on progress in cybersecurity using Kali Linux.
+Welcome to **Day 1** of my **30-Day Ethical Hacking**! This journey documents my daily learning and hands-on progress in cybersecurity using Kali Linux where we will find out some basics of networking and how these things workout.
 
 ---
 
